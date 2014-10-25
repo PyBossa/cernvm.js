@@ -141,20 +141,6 @@
             /**
              * Handle all errors with a unified global function
              */
-            CVM.debugLogging = true
-            CVM.setGlobalErrorHandler(function(msg, code) {
-               $("#alert-body").html(msg);
-               $("#alert-box").fadeIn();
-               $("#alert-box").alert();
-            });
-            
-            CVM.setConfirmFunction( function(msg, cb) {
-               $("#confirm-body").html(msg);
-               $("#confirm-box").fadeIn();
-               $("#confirm-accept").click(function() { cb(true); $("#confirm-box").fadeOut(); });
-               $("#confirm-abort").click(function() { cb(false); $("#confirm-box").fadeOut(); });
-            });
-
             function progressEvent(value, msg) {
                 console.log(msg + ": " + value);
                 //if (msg == 'Extracting compressed disk') {
@@ -179,9 +165,6 @@
             function hideProgressBar(){
                 $("#prg-container").hide();
             }
-
-            CVM.setGlobalProgressHandler ( progressEvent, showProgressBar, hideProgressBar);
-                
 
             CVM.startCVMWebAPI(function(api){
                     
@@ -379,33 +362,39 @@
                     //    console.log(data);
                     //});
 
-                    session.addEventListener('apiAvailable', function(url) {
-                        $("#timerContainer").show();
-                        //var logs = $("<a/>");
-                        //logs.addClass("btn");
-                        //logs.html('<i class="icon-cogs"></i> Log files');
-                        $("#logs").off('click').on('click', function(){
-                            var windowObjectReference = window.open(session.apiURL + "/logs" , "cernvmLogs");
-                        });
-                        //$("#logs").attr("href", session.apiURL + "/logs");
-                        //$("#logs").attr("target", "_blank");
-                        $("#logs").removeClass("disabled");
-                        $("#info").show();
-
-                        if (intervalId == -1) {
-                            showFigures(session.apiURL);
-                            intervalId = setInterval(function(){showFigures(session.apiURL)}, pollingTime);
-                            $("#timer").val(timerValue).trigger('change');
-                            timerId = setInterval(function(){timer();}, 1000);
+                    session.addEventListener('apiStateChanged', function(isApiAvailable, url) {
+                        if (!isApiAvailable) {
+                            $("#simulationContainer").hide();
                         }
                         else {
-                            clearInterval(intervalId);
-                            showFigures(session.apiURL);
-                            intervalId = setInterval(function(){showFigures(session.apiURL)}, pollingTime);
-                            $("#timer").val(timerValue).trigger('change');
-                            timerId = setInterval(function(){timer();}, 60000);
+                            $("#timerContainer").show();
+                            //var logs = $("<a/>");
+                            //logs.addClass("btn");
+                            //logs.html('<i class="icon-cogs"></i> Log files');
+                            $("#logs").off('click').on('click', function(){
+                                var windowObjectReference = window.open(session.apiURL + "/logs" , "cernvmLogs");
+                            });
+                            //$("#logs").attr("href", session.apiURL + "/logs");
+                            //$("#logs").attr("target", "_blank");
+                            $("#logs").removeClass("disabled");
+                            $("#info").show();
+
+                            if (intervalId == -1) {
+                                showFigures(session.apiURL);
+                                intervalId = setInterval(function(){showFigures(session.apiURL)}, pollingTime);
+                                $("#timer").val(timerValue).trigger('change');
+                                timerId = setInterval(function(){timer();}, 1000);
+                            }
+                            else {
+                                clearInterval(intervalId);
+                                showFigures(session.apiURL);
+                                intervalId = setInterval(function(){showFigures(session.apiURL)}, pollingTime);
+                                $("#timer").val(timerValue).trigger('change');
+                                timerId = setInterval(function(){timer();}, 60000);
+                            }
+                            });
                         }
-                        });
+
                     session.addEventListener('progress', function(val, msg){
                         console.log(val + " " + msg);
                         var pct = String(val + "%");
