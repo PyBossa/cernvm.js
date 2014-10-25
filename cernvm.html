@@ -138,23 +138,6 @@
                'thickness': .2,
             });
 
-            /**
-             * Handle all errors with a unified global function
-             */
-            CVM.debugLogging = true
-            CVM.setGlobalErrorHandler(function(msg, code) {
-               $("#alert-body").html(msg);
-               $("#alert-box").fadeIn();
-               $("#alert-box").alert();
-            });
-            
-            CVM.setConfirmFunction( function(msg, cb) {
-               $("#confirm-body").html(msg);
-               $("#confirm-box").fadeIn();
-               $("#confirm-accept").click(function() { cb(true); $("#confirm-box").fadeOut(); });
-               $("#confirm-abort").click(function() { cb(false); $("#confirm-box").fadeOut(); });
-            });
-
             function progressEvent(value, msg) {
                 console.log(msg + ": " + value);
                 //if (msg == 'Extracting compressed disk') {
@@ -179,8 +162,6 @@
             function hideProgressBar(){
                 $("#prg-container").hide();
             }
-
-            CVM.setGlobalProgressHandler ( progressEvent, showProgressBar, hideProgressBar);
                 
 
             CVM.startCVMWebAPI(function(api){
