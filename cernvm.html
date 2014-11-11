@@ -260,7 +260,7 @@
                         console.log(err);
                     });
                     // Session State Change
-                    session.addEventListener('sessionStateChange', function(state){
+                    session.addEventListener('stateChanged', function(state){
                         if (state == 2) {
                             $("#stop").html('<i class="icon-stop"></i> Stop');
                         }
