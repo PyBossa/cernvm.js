@@ -392,8 +392,8 @@
                                 $("#timer").val(timerValue).trigger('change');
                                 timerId = setInterval(function(){timer();}, 60000);
                             }
-                            });
                         }
+                    });
 
                     session.addEventListener('progress', function(val, msg){
                         console.log(val + " " + msg);
