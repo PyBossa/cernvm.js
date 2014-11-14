@@ -465,10 +465,9 @@
                 function showFigures(url){
                     $("#apiLoading").hide();
 
-                    var xhr = $.ajax({
+                    var xhr = $.getJSON({
                         url: url + '/job/resources.json',
-                        cache: false,
-                        dataType: 'json'
+                        cache: false
                     });
                     xhr.done(function(data, textStatus, request){
                         console.log();
