@@ -211,27 +211,35 @@
                     }
                 });
 
+                function restorePreviousSession(state) {
+                    if (state == 2) {
+                        //$("#rdpURL").attr("href", "rdp://" + session.rdpURL);
+                        $("#play").click();
+                    }
+                    if (state == 4) {
+                        //$("#rdpURL").attr("href", "rdp://" + session.rdpURL);
+                        $("#play").addClass("active");
+                        $("#apiLoading").show();
+                    }
+                    if (state == 6) {
+                        //$("#rdpURL").attr("href", "rdp://" + session.rdpURL);
+                        $("#pause").addClass("active");
+                        $("#stop").addClass("disabled");
+                    }
+                }
+
                 function session_requested(sessionObject) {
                     console.log("Session requested");
                     // Save that the user has successfully created a session
                     localStorage.setItem("cernvmSession", true);
                     // $("#session").hide();
                     session = sessionObject;
-                    if (session.state == 2) {
-                        //$("#rdpURL").attr("href", "rdp://" + session.rdpURL);
-                        $("#play").click();
+                    if (session.state != 0) {
+                        restorePreviousSession(session.state)
                     }
-                    if (session.state == 4) {
-                        //$("#rdpURL").attr("href", "rdp://" + session.rdpURL);
-                        $("#play").addClass("active");
-                        $("#apiLoading").show();
-                    }
-                    if (session.state == 6) {
-                        //$("#rdpURL").attr("href", "rdp://" + session.rdpURL);
-                        $("#pause").addClass("active");
-                        $("#stop").addClass("disabled");
-                    }
+
                     $("#vm-controls").show();
+
 
                     // Bind Events
                     session.addEventListener('progress', function(msg, progress){
@@ -241,19 +249,6 @@
                             return;
                         }
                         $("#prg-container").hide();
-                    });
-
-                    session.addEventListener('open', function(){
-                        //$("#rdpURL").attr("href", "rdp://" + session.rdpURL);
-                        $("#vm-controls").show();
-                        //$("#play").click();
-                        $("#play").removeClass("active");
-                        $("#pause").removeClass("active");
-                        $("#stop").removeClass("disabled");
-                        $("#prg-container").hide();
-                        $("#simulationContainer").hide();
-                        $("#apiLoading").hide();
-                        $("#timerContainer").hide();
                     });
 
                     // Session State Change
