@@ -365,19 +365,6 @@
 
                     $("#timer").val(timerValue).trigger('change');
                     $("#vm-config").hide();
-                    console.log("Create Session: " + session.state);
-                    if (session.state == 4) {
-                        $("#play").addClass("active");
-                    }
-                    if (session.state == 6) {
-                        $("#pause").addClass("active");
-                        $("#stop").addClass("disabled");
-                    }
-                    if (session.state == 2 ) {
-                        session.start();
-                        $("#play").addClass("active");
-                    }
-                    $("#vm-controls").show();
 
                     $("#play").off('click').on('click', function(){
                         $("#play").addClass("active");
@@ -481,20 +468,6 @@
                         $("#jobLoading").show();
                     });
                 }
-
-                // $("#create-session").off('click').on('click', function(){
-                //     var session_name = $("#session-name").val();
-                //     session_name = "cernvm";
-                //     var session_secret = $("#session-secret").val();
-                //     if (session_secret == '') {
-                //         alert("Password field is required!");
-                //         return;
-                //     }
-                //     $("#session").hide();
-                //     $("#vm-config").show();
-                //     $("#progress").css("width", "0%");
-                //     $("#msg").text(" Setting Virtual Machine");
-                // });
 
                 $(".create-vm").off('click').on('click', function(evt){
                     var _html = $(".create-vm:visible").html();
