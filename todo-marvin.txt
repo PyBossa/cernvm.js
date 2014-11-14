@@ -1,0 +1,11 @@
+Functions:
+apiavailable
+apiaunavailable
+
+sessionstate changed - statechanged
+
+session.state use constants
+
+New version can go from state to state (rewrite!)
+
+
