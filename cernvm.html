@@ -217,7 +217,6 @@
                     localStorage.setItem("cernvmSession", true);
                     // $("#session").hide();
                     session = sessionObject;
-                    console.log(session.state);
                     if (session.state == 2) {
                         //$("#rdpURL").attr("href", "rdp://" + session.rdpURL);
                         $("#play").click();
@@ -235,11 +234,12 @@
                     $("#vm-controls").show();
 
                     // Bind Events
-                    session.addEventListener('progressBegin', function(){
-                        $("#prg-container").show();
-                        $("#progress").css("width", "0%");
-                    });
-                    session.addEventListener('progressEnd', function(){
+                    session.addEventListener('progress', function(msg, progress){
+                        if (progress < 1.0) {
+                            $("#prg-container").show();
+                            $("#progress").css("width", String(progress*100)+"%");
+                            return;
+                        }
                         $("#prg-container").hide();
                     });
 
