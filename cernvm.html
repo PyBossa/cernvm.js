@@ -259,7 +259,7 @@
                     });
 
                     // START
-                    session.addEventListener('start', function(){
+                    session.addEventListener('started', function(){
                         console.log("Session started");
                         // $("#extracting").hide();
                         //$("#rdpURL").attr("href", "rdp://" + session.rdpURL);
@@ -361,13 +361,6 @@
                                 timerId = setInterval(function(){timer();}, 60000);
                             }
                         }
-                    });
-
-                    session.addEventListener('progress', function(val, msg){
-                        console.log(val + " " + msg);
-                        var pct = String(val + "%");
-                        $("#progress").css("width", pct);
-                        $("#msg").text(msg);
                     });
 
                     $("#timer").val(timerValue).trigger('change');
