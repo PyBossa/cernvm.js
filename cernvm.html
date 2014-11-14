@@ -167,7 +167,7 @@
             }
 
             CVM.startCVMWebAPI(function(api){
-                    
+
                 var session = undefined;
                 var intervalId = -1;
                 var timerId = -1;
@@ -214,7 +214,7 @@
                     console.log("Session requested");
                     // Save that the user has successfully created a session
                     localStorage.setItem("cernvmSession", true);
-                    $("#session").hide();
+                    // $("#session").hide();
                     session = sessionObject;
                     console.log(session.state);
                     if (session.state == 2) {
@@ -265,7 +265,7 @@
                     // START
                     session.addEventListener('start', function(){
                         console.log("Session started");
-                        $("#extracting").hide();
+                        // $("#extracting").hide();
                         //$("#rdpURL").attr("href", "rdp://" + session.rdpURL);
                         $("#apiLoading").show();
                         $("#play").addClass("active");
@@ -493,19 +493,19 @@
                     });
                 }
 
-                $("#create-session").off('click').on('click', function(){
-                    var session_name = $("#session-name").val();
-                    session_name = "cernvm";
-                    var session_secret = $("#session-secret").val();
-                    if (session_secret == '') {
-                        alert("Password field is required!");
-                        return;
-                    }
-                    $("#session").hide();
-                    $("#vm-config").show();
-                    $("#progress").css("width", "0%");
-                    $("#msg").text(" Setting Virtual Machine");
-                });
+                // $("#create-session").off('click').on('click', function(){
+                //     var session_name = $("#session-name").val();
+                //     session_name = "cernvm";
+                //     var session_secret = $("#session-secret").val();
+                //     if (session_secret == '') {
+                //         alert("Password field is required!");
+                //         return;
+                //     }
+                //     $("#session").hide();
+                //     $("#vm-config").show();
+                //     $("#progress").css("width", "0%");
+                //     $("#msg").text(" Setting Virtual Machine");
+                // });
 
                 $(".create-vm").off('click').on('click', function(evt){
                     var _html = $(".create-vm:visible").html();
