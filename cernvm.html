@@ -65,13 +65,13 @@
             </div>
         </div>
         <!-- End section progress -->
-        <!-- Section for controlling the VM: play, pause, stop and clean -->
+        <!-- Section for controlling the VM: play, pause, stop. hibernate and remove -->
         <div id="vm-controls" style="display:none; padding-bottom: 5px; padding-top:5px;">
             <h1><i class="fa fa-dashboard"></i> Step 2 of 2: <small>Control the Virtual Machine</small></h1>
             <div class="row">
                 <div class="col-md-9">
                     <p><strong>Click in the Play button to start contributing</strong></p>
-                    <p><span class="label label-info"><i class="fa fa-bullhorn"></i> Note</span> You can start, pause, stop or even remove the virtual machine from your computer.</p> 
+                    <p><span class="label label-info"><i class="fa fa-bullhorn"></i> Note</span> You can start, pause, hibernate, stop or even remove the virtual machine from your computer.</p> 
                     <div id="advance-btn" class="btn-group" style="padding-top:5px; padding-bottom:5px;display:none;">
                         <a href="#" id="rdpURL" class="btn btn-inverse"><i class="fa fa-eye"></i> Open Virtual Machine RDP window</a>
                         <a href="#" id="logs" class="btn btn-inverse disabled"><i class="fa fa-cogs"></i> Open Virtual Machine Logs</a>
@@ -79,10 +79,11 @@
                     <div class="btn-group" style="margin-left:0px;">
                         <button id="play" class="btn btn-default"><i class="fa fa-play"></i> Play</button>
                         <button id="pause" class="btn btn-default"><i class="fa fa-pause"></i> Pause</button>
+                        <button id="hibernate" class="btn btn-default"><i class="fa fa-stop"></i> Hibernate</button>
                         <button id="stop" class="btn btn-default"><i class="fa fa-stop"></i> Stop</button>
-                        <button id="clean" class="btn btn-default"><i class="fa fa-trash"></i> Clean</button>
+                        <button id="remove" class="btn btn-default"><i class="fa fa-trash"></i> Remove</button>
                     </div>
-                    <br/>
+
                     <button id="advance" type="button" class="btn btn-default" data-toggle="button"><i class="fa fa-square-o"></i> Show advance options</button>
                 </div>
                 <div id="timerContainer" class="col-md-3 img-polaroid" style="text-align:center; display:none">
@@ -423,7 +424,7 @@
                             session.hibernate();
                         }
                     });
-                    $("#clean").off('click').on('click', function(){
+                    $("#remove").off('click').on('click', function(){
                         session.close();
                     });
                 }
