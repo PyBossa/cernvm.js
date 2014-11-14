@@ -7,8 +7,8 @@
     #galleria {width: 400px; height: 400px; background: #000}
     label { font-size:24px; }
 </style>
-<div class="row-fluid">
-    <div class="span12">
+<div class="row">
+    <div class="col-md-12">
         <div id="info-box" class="alert alert-info fade in hide">
             <button type="button" class="close" data-dismiss="alert">&#xd7;</button>
             <span id="info-body">Message</span>
@@ -17,39 +17,39 @@
             <button type="button" class="close" data-dismiss="alert">&#xd7;</button>
             <strong>An error occured!</strong> <span id="alert-body">Message</span>
         </div>
-        <div id="confirm-box" class="alert alert-block alert-error fade in hide">
+        <div id="confirm-box" class="alert alert-block alert-danger fade in hide">
             <h4 id="confirm-head" class="alert-heading">Your action is needed</h4>
             <p id="confirm-body">Message</p>
             <p>
             <a id="confirm-accept" class="btn btn-danger" href="#">Continue</a>
-            <a id="confirm-abort" class="btn" href="#">Cancel</a>
+            <a id="confirm-abort" class="btn btn-default" href="#">Cancel</a>
             </p>
         </div>
     </div>
 </div>
-<div class="row-fluid">
-    <div class="span12">
+<div class="row">
+    <div class="col-md-12">
         <!-- CernVM plugin -->
         <embed type="application/x-cvmweb" id="cvmweb" style="width:1px; height:1px;">
         <!-- Section for configuring the VM: number of CPUs, RAM memory and Disk -->
         <div id="vm-config">
-            <h1 class="newSession"><i class="icon-wrench"></i> Step 1 of 2: <small>Configuring the Virtual Machine</small></h1>
-            <p class="newSession">In this step you can decide how much of your resources you want to share with the project. <a href="#" class="btn btn-primary create-vm disabled">Create Virtual Machine <i class="icon-chevron-right"></i></a></p>
+            <h1 class="newSession"><i class="fa fa-wrench"></i> Step 1 of 2: <small>Configuring the Virtual Machine</small></h1>
+            <p class="newSession">In this step you can decide how much of your resources you want to share with the project. <a href="#" class="btn btn-primary create-vm disabled">Create Virtual Machine <i class="fa fa-chevron-right"></i></a></p>
             <!-- recoverSession -->
-            <h1 class="recoverSession" style="display:none"><i class="icon-undo"></i> Step 1 of 2: <small>Restore the Virtual Machine</small></h1>
-            <p class="recoverSession" style="display:none"><button type="button" data-loading-text="Restoring session..." class="btn btn-primary create-vm disabled">Restore the Virtual Machine <i class="icon-chevron-right"></i></button></p>
+            <h1 class="recoverSession" style="display:none"><i class="fa fa-undo"></i> Step 1 of 2: <small>Restore the Virtual Machine</small></h1>
+            <p class="recoverSession" style="display:none"><button type="button" data-loading-text="Restoring session..." class="btn btn-primary create-vm disabled">Restore the Virtual Machine <i class="fa fa-chevron-right"></i></button></p>
 
             <hr>
             <div class="row newSession">
-                <div class="span4" style="text-align:center;">
+                <div class="col-md-4" style="text-align:center;">
                 <label for="cpus">Nº CPUs</label>
                 <input type="text" class="dial" data-min="0" data-max="4" data-width="150" value="1" id="cpus">
                 </div>
-                <div class="span4" style="text-align:center;">
+                <div class="col-md-4" style="text-align:center;">
                 <label for="ram">RAM MB</label>
                 <input type="text" class="dial" data-min="0" data-max="1024" data-width="150" data-step="32" value="256" id="ram">
                 </div>
-                <div class="span4" style="text-align:center;">
+                <div class="col-md-4" style="text-align:center;">
                 <label for="disk">Disk MB</label>
                 <input type="text" class="dial" data-min="0" data-max="2048" data-width="150" data-step="32" value="1024" id="disk">
                 </div>
@@ -58,38 +58,38 @@
         <!-- Section to show the progress of the creation of the VM -->
         <div id="prg-container" style="display:none;">
             <div class="alert alert-info">
-                <i class="icon-refresh icon-spin"></i> <strong><span id="msg">action</span></strong> This may take a while, please, be patient. 
+                <i class="fa fa-refresh fa-spin"></i> <strong><span id="msg">action</span></strong> This may take a while, please, be patient. 
             </div>
             <div class="progress progress-striped active">
-                <div id="progress" class="bar bar-info" style="width:0%"></div>
+                <div id="progress" class="progress-bar bar-info" style="width:0%"></div>
             </div>
         </div>
         <!-- End section progress -->
         <!-- Section for controlling the VM: play, pause, stop and clean -->
         <div id="vm-controls" style="display:none; padding-bottom: 5px; padding-top:5px;">
-            <h1><i class="icon-dashboard"></i> Step 2 of 2: <small>Control the Virtual Machine</small></h1>
-            <div class="row-fluid">
-                <div class="span9">
+            <h1><i class="fa fa-dashboard"></i> Step 2 of 2: <small>Control the Virtual Machine</small></h1>
+            <div class="row">
+                <div class="col-md-9">
                     <p><strong>Click in the Play button to start contributing</strong></p>
-                    <p><span class="label label-info"><i class="icon-bullhorn"></i> Note</span> You can start, pause, stop or even remove the virtual machine from your computer.</p> 
+                    <p><span class="label label-info"><i class="fa fa-bullhorn"></i> Note</span> You can start, pause, stop or even remove the virtual machine from your computer.</p> 
                     <div id="advance-btn" class="btn-group" style="padding-top:5px; padding-bottom:5px;display:none;">
-                        <a href="#" id="rdpURL" class="btn btn-inverse"><i class="icon-eye-open"></i> Open Virtual Machine RDP window</a>
-                        <a href="#" id="logs" class="btn btn-inverse disabled"><i class="icon-cogs"></i> Open Virtual Machine Logs</a>
+                        <a href="#" id="rdpURL" class="btn btn-inverse"><i class="fa fa-eye-open"></i> Open Virtual Machine RDP window</a>
+                        <a href="#" id="logs" class="btn btn-inverse disabled"><i class="fa fa-cogs"></i> Open Virtual Machine Logs</a>
                     </div>
                     <div class="btn-group" style="margin-left:0px;">
-                        <button id="play" class="btn"><i class="icon-play"></i> Play</button>
-                        <button id="pause" class="btn"><i class="icon-pause"></i> Pause</button>
-                        <button id="stop" class="btn"><i class="icon-stop"></i> Stop</button>
-                        <button id="clean" class="btn"><i class="icon-trash"></i> Clean</button>
+                        <button id="play" class="btn btn-default"><i class="fa fa-play"></i> Play</button>
+                        <button id="pause" class="btn btn-default"><i class="fa fa-pause"></i> Pause</button>
+                        <button id="stop" class="btn btn-default"><i class="fa fa-stop"></i> Stop</button>
+                        <button id="clean" class="btn btn-default"><i class="fa fa-trash"></i> Clean</button>
                     </div>
                     <br/>
-                    <button id="advance" type="button" class="btn" data-toggle="button"><i class="icon-check-empty"></i> Show advance options</button>
+                    <button id="advance" type="button" class="btn btn-default" data-toggle="button"><i class="fa fa-check-empty"></i> Show advance options</button>
                 </div>
-                <div id="timerContainer" class="span3 img-polaroid" style="text-align:center; display:none">
+                <div id="timerContainer" class="col-md-3 img-polaroid" style="text-align:center; display:none">
                     <label for="timer" style="font-size:12px;">Remaining time to update the figures</label>
                     <input id="timer" type="text" class="dial" data-width="100" data-height="100" data-min="0" data-max="150" value="150" data-readOnly="true" data-displayInput="false"></input>
                     <div style="text-align:center">
-                    <button id="refresh" class="btn"><i class="icon-refresh"></i> Update Now</button>
+                    <button id="refresh" class="btn btn-default"><i class="fa fa-refresh"></i> Update Now</button>
                     </div>
                 </div>
             </div>
@@ -97,14 +97,14 @@
     </div>
 </div>
 
-<div class="row-fluid">
-    <div class="span12">
+<div class="row">
+    <div class="col-md-12">
         <div id="apiLoading" class="alert alert-info" style="display:none;">
-            <i class="icon-refresh icon-spin"></i> <strong>Info:</strong> Enabling Advance Options to control the Virtual Machine...
+            <i class="fa fa-refresh fa-spin"></i> <strong>Info:</strong> Enabling Advance Options to control the Virtual Machine...
             <!-- Dial to show the count down to next update -->
         </div>
         <div id="jobLoading" class="alert alert-warning" style="display:none;">
-            <i class="icon-refresh icon-spin"></i> <strong>Info:</strong> Your Virtual Machine is being prepared to run jobs...
+            <i class="fa fa-refresh fa-spin"></i> <strong>Info:</strong> Your Virtual Machine is being prepared to run jobs...
             <!-- Dial to show the count down to next update -->
         </div>
     </div>
@@ -112,12 +112,12 @@
 
 <div class="row" id="simulationContainer" style="display:none">
     <hr>
-    <h2><i class="icon-dashboard"></i> Virtual Machine output: <small>Simulation details and figures computed by you</small></h2>
-    <div id="info" class="span4 well well-small" style="display:none;">
+    <h2><i class="fa fa-dashboard"></i> Virtual Machine output: <small>Simulation details and figures computed by you</small></h2>
+    <div id="info" class="col-md-4 well well-small" style="display:none;">
         <div id="sim"></div>
         <!--<div id="logs" style="display:none"></div>-->
     </div>
-    <div id="galleria" class="span6" style="display:none"></div>
+    <div id="galleria" class="col-md-6" style="display:none"></div>
 </div>
 
 <script>
@@ -203,10 +203,10 @@
                 $("#advance").off('click').on('click', function(){
                     $("#advance-btn").toggle();
                     if ($("#advance").hasClass('btn active')) {
-                        $("#advance").html('<i class="icon-check-empty"></i> Show advance options');
+                        $("#advance").html('<i class="fa fa-check-empty"></i> Show advance options');
                     }
                     else {
-                        $("#advance").html('<i class="icon-check"></i> Hide advance options');
+                        $("#advance").html('<i class="fa fa-check"></i> Hide advance options');
                     }
                 });
 
@@ -258,7 +258,7 @@
                     // Session State Change
                     session.addEventListener('stateChanged', function(state){
                         if (state == 2) {
-                            $("#stop").html('<i class="icon-stop"></i> Stop');
+                            $("#stop").html('<i class="fa fa-stop"></i> Stop');
                         }
                     });
 
@@ -341,8 +341,8 @@
                         else {
                             $("#timerContainer").show();
                             //var logs = $("<a/>");
-                            //logs.addClass("btn");
-                            //logs.html('<i class="icon-cogs"></i> Log files');
+                            //logs.addClass("btn btn-default");
+                            //logs.html('<i class="fa fa-cogs"></i> Log files');
                             $("#logs").off('click').on('click', function(){
                                 var windowObjectReference = window.open(session.apiURL + "/logs" , "cernvmLogs");
                             });
@@ -417,7 +417,7 @@
                     });
                     $("#stop").off('click').on('click', function(){
                         if (session.state == 4) {
-                            $("#stop").html('<i class="icon-refresh icon-spin"></i> Stopping ');
+                            $("#stop").html('<i class="fa fa-refresh fa-spin"></i> Stopping ');
                             $("#stop").addClass("disabled");
                             $("#pause").addClass("disabled");
                             session.hibernate();
@@ -509,7 +509,7 @@
 
                 $(".create-vm").off('click').on('click', function(evt){
                     var _html = $(".create-vm:visible").html();
-                    $(".create-vm:visible").html('<i class="icon-refresh icon-spin"></i> ' + _html);
+                    $(".create-vm:visible").html('<i class="fa fa-refresh fa-spin"></i> ' + _html);
                     var config = {'cpus': 1, 'ram': 256, 'disk': 1024, 'version': '1.4',
                                  'diskURL': 'http://lhcathome2.cern.ch/test4theory/download/255/cernvm.vmdk.gz=cernvm_2.5.1-3-1.1_vmdk.gz',
                                  'flags': 8|4|2};
