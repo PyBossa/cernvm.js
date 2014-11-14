@@ -390,44 +390,42 @@
                     }
                     $("#vm-controls").show();
 
-                $("#play").off('click').on('click', function(){
-                    $("#play").addClass("active");
-                    console.log("Session state: " + session.state);
-                    // If session paused resume it
-                    if (session.state == 6) {
-                        res = session.resume();
-                        return;
-                    }
+                    $("#play").off('click').on('click', function(){
+                        $("#play").addClass("active");
+                        console.log("Session state: " + session.state);
+                        // If session paused resume it
+                        if (session.state == 6) {
+                            res = session.resume();
+                            return;
+                        }
 
-                    // If session starting or started pause it
-                    //if ((session.state == 3) || (session.state == 4)) {
-                    //    res = session.pause();
-                    //    return;
-                    //}
+                        // If session starting or started pause it
+                        //if ((session.state == 3) || (session.state == 4)) {
+                        //    res = session.pause();
+                        //    return;
+                        //}
 
-                    // Else start
-                    if ((session.state == 0) || (session.state == 2)) {
-                        res = session.start();
-                        return;
-                    }
-                });
+                        // Else start
+                        if ((session.state == 0) || (session.state == 2)) {
+                            res = session.start();
+                            return;
+                        }
+                    });
 
-                $("#pause").off('click').on('click', function(){
-                    session.pause();
-                });
-                $("#stop").off('click').on('click', function(){
-                    if (session.state == 4) {
-                        $("#stop").html('<i class="icon-refresh icon-spin"></i> Stopping ');
-                        $("#stop").addClass("disabled");
-                        $("#pause").addClass("disabled");
-                        session.hibernate();
-                    }
-                });
-                $("#clean").off('click').on('click', function(){
-                    session.close();
-                });
-
-
+                    $("#pause").off('click').on('click', function(){
+                        session.pause();
+                    });
+                    $("#stop").off('click').on('click', function(){
+                        if (session.state == 4) {
+                            $("#stop").html('<i class="icon-refresh icon-spin"></i> Stopping ');
+                            $("#stop").addClass("disabled");
+                            $("#pause").addClass("disabled");
+                            session.hibernate();
+                        }
+                    });
+                    $("#clean").off('click').on('click', function(){
+                        session.close();
+                    });
                 }
 
                 function session_failure(error_code) {
@@ -493,7 +491,6 @@
                         $("#apiLoading").hide();
                         $("#jobLoading").show();
                     });
-
                 }
 
                 $("#create-session").off('click').on('click', function(){
@@ -503,7 +500,6 @@
                     if (session_secret == '') {
                         alert("Password field is required!");
                         return;
-
                     }
                     $("#session").hide();
                     $("#vm-config").show();
@@ -540,7 +536,6 @@
                     url += '&diskURL=' + config.diskURL;
                     url += '&diskChecksum=' + config.diskChecksum;
                     api.requestSession(url, session_requested);
-
                 });
 
 
