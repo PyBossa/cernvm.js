@@ -73,7 +73,7 @@
                     <p><strong>Click in the Play button to start contributing</strong></p>
                     <p><span class="label label-info"><i class="fa fa-bullhorn"></i> Note</span> You can start, pause, stop or even remove the virtual machine from your computer.</p> 
                     <div id="advance-btn" class="btn-group" style="padding-top:5px; padding-bottom:5px;display:none;">
-                        <a href="#" id="rdpURL" class="btn btn-inverse"><i class="fa fa-eye-open"></i> Open Virtual Machine RDP window</a>
+                        <a href="#" id="rdpURL" class="btn btn-inverse"><i class="fa fa-eye"></i> Open Virtual Machine RDP window</a>
                         <a href="#" id="logs" class="btn btn-inverse disabled"><i class="fa fa-cogs"></i> Open Virtual Machine Logs</a>
                     </div>
                     <div class="btn-group" style="margin-left:0px;">
@@ -83,7 +83,7 @@
                         <button id="clean" class="btn btn-default"><i class="fa fa-trash"></i> Clean</button>
                     </div>
                     <br/>
-                    <button id="advance" type="button" class="btn btn-default" data-toggle="button"><i class="fa fa-check-empty"></i> Show advance options</button>
+                    <button id="advance" type="button" class="btn btn-default" data-toggle="button"><i class="fa fa-square-o"></i> Show advance options</button>
                 </div>
                 <div id="timerContainer" class="col-md-3 img-polaroid" style="text-align:center; display:none">
                     <label for="timer" style="font-size:12px;">Remaining time to update the figures</label>
@@ -202,11 +202,11 @@
 
                 $("#advance").off('click').on('click', function(){
                     $("#advance-btn").toggle();
-                    if ($("#advance").hasClass('btn active')) {
-                        $("#advance").html('<i class="fa fa-check-empty"></i> Show advance options');
+                    if ($("#advance").hasClass('active')) {
+                        $("#advance").html('<i class="fa fa-square-o"></i> Show advance options');
                     }
                     else {
-                        $("#advance").html('<i class="fa fa-check"></i> Hide advance options');
+                        $("#advance").html('<i class="fa fa-check-square-o"></i> Hide advance options');
                     }
                 });
 
