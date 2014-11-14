@@ -255,10 +255,6 @@
                         $("#timerContainer").hide();
                     });
 
-                    session.addEventListener('openError', function(data, err){
-                        console.log(data);
-                        console.log(err);
-                    });
                     // Session State Change
                     session.addEventListener('stateChanged', function(state){
                         if (state == 2) {
@@ -278,10 +274,6 @@
                         $("#stop").removeClass("disabled");
                         $("#pause").removeClass("disabled");
                     });
-                    // START ERROR
-                    session.addEventListener('startError', function(msg, err){
-                        console.log("Unable to start session! " + msg + " error code: " + err);
-                    });
 
                     // RESUME
                     session.addEventListener('resume', function(){
@@ -291,10 +283,6 @@
                         $("#play").addClass("active");
                         $("#pause").removeClass("active");
                         $("#stop").removeClass("disabled");
-                    });
-                    // RESUME ERROR
-                    session.addEventListener('resumeError', function(msg, err){
-                        console.log("Unable to resume session! " + msg + " error code: " + err);
                     });
 
                     // PAUSE 
@@ -313,10 +301,6 @@
                         intervalId = -1;
                         timerId = -1;
                     });
-                    // PAUSE ERROR
-                    session.addEventListener('pauseError', function(msg, err){
-                        console.log("Unable to pause session! " + msg + " error code: " + err);
-                    });
 
                     // STOP == HIBERNATE we freeze the VM
                     session.addEventListener('hibernate', function(){
@@ -331,10 +315,7 @@
                         $("#apiLoading").hide();
                         $("#timerContainer").hide();
                     });
-                    // STOP ERROR == HIBERNATE ERROR
-                    session.addEventListener('hibernateError', function(msg, err){
-                        console.log("Unable to hibernate session! " + msg + " error code: " + err);
-                    });
+
                     // CLOSE
                     session.addEventListener('close', function() {
                         console.log("Session is closed");
@@ -348,15 +329,10 @@
                         $("#jobLoading").hide();
                         $("#apiLoading").hide();
                     });
-                    // CLOSE ERROR
-                    session.addEventListener('closeError', function(msg, err){
-                        console.log("Unable to close session! " + msg + " error code: " + err);
-                    });
 
-                    // DEBUG
-                    //session.addEventListener('debug', function(data){
-                    //    console.log(data);
-                    //});
+                    session.addEventListener('error', function(mesg, err){
+                        console.log(msg + " error code: " + err);
+                    });
 
                     session.addEventListener('apiStateChanged', function(isApiAvailable, url) {
                         if (!isApiAvailable) {
