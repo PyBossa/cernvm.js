@@ -142,30 +142,6 @@
             /**
              * Handle all errors with a unified global function
              */
-            function progressEvent(value, msg) {
-                console.log(msg + ": " + value);
-                //if (msg == 'Extracting compressed disk') {
-                //    $("#extracting").show();
-                //}
-                //if (msg == 'Attaching hard disk') {
-                //    $("#extracting").hide();
-                //}
-                $("#msg").text(msg + ": " + String(value) + "%");
-                $("#progress").css("width", value +"%");
-                if ((msg == 'Downloading VM Disk') && (value == 100)) {
-                    $("#msg").text("Unzipping Virtual Machine");
-                    $("#progress").css("width", "85%");
-                }
-            };
-
-            function showProgressBar(){
-                $("#prg-container").show();
-                $("#vm-config").hide();
-            }
-
-            function hideProgressBar(){
-                $("#prg-container").hide();
-            }
 
             CVM.startCVMWebAPI(function(api){
 
@@ -211,32 +187,11 @@
                     }
                 });
 
-                function restorePreviousSession(state) {
-                    if (state == 2) {
-                        //$("#rdpURL").attr("href", "rdp://" + session.rdpURL);
-                        $("#play").click();
-                    }
-                    if (state == 4) {
-                        //$("#rdpURL").attr("href", "rdp://" + session.rdpURL);
-                        $("#play").addClass("active");
-                        $("#apiLoading").show();
-                    }
-                    if (state == 6) {
-                        //$("#rdpURL").attr("href", "rdp://" + session.rdpURL);
-                        $("#pause").addClass("active");
-                        $("#stop").addClass("disabled");
-                    }
-                }
-
                 function session_requested(sessionObject) {
                     console.log("Session requested");
                     // Save that the user has successfully created a session
                     localStorage.setItem("cernvmSession", true);
-                    // $("#session").hide();
                     session = sessionObject;
-                    if (session.state != 0) {
-                        restorePreviousSession(session.state)
-                    }
 
                     $("#vm-controls").show();
 
@@ -253,78 +208,53 @@
 
                     // Session State Change
                     session.addEventListener('stateChanged', function(state){
-                        if (state == 2) {
-                            $("#stop").html('<i class="fa fa-stop"></i> Stop');
+                        handleNewState(state);
+                    });
+
+                    function handleNewState(state) {
+                        // No session
+                        if (state == 0) {
+                            $("#vm-config").hide();
+                            return;
                         }
-                    });
-
-                    // START
-                    session.addEventListener('started', function(){
-                        console.log("Session started");
-                        // $("#extracting").hide();
-                        //$("#rdpURL").attr("href", "rdp://" + session.rdpURL);
-                        $("#apiLoading").show();
-                        $("#play").addClass("active");
-                        $("#pause").removeClass("active");
-                        $("#stop").removeClass("active");
-                        $("#stop").removeClass("disabled");
-                        $("#pause").removeClass("disabled");
-                    });
-
-                    // RESUME
-                    session.addEventListener('resume', function(){
-                        console.log("Session resumed");
-                        //$("#rdpURL").attr("href", "rdp://" + session.rdpURL);
-                        $("#apiLoading").show();
-                        $("#play").addClass("active");
-                        $("#pause").removeClass("active");
-                        $("#stop").removeClass("disabled");
-                    });
-
-                    // PAUSE 
-                    session.addEventListener('pause', function(){
-                        console.log("Session paused");
-                        //$("#rdpURL").attr("href", "rdp://" + session.rdpURL);
-                        $("#pause").addClass("active");
-                        $("#play").removeClass("active");
-                        $("#stop").addClass("disabled");
-                        $("#apiURL").hide();
-                        $("#timerContainer").hide();
-                        // Stop also the poll
-                        clearInterval(intervalId);
-                        clearInterval(timerId);
-                        // Reset it
-                        intervalId = -1;
-                        timerId = -1;
-                    });
-
-                    // STOP == HIBERNATE we freeze the VM
-                    session.addEventListener('hibernate', function(){
-                        console.log("Session hibernated");
-                        //$("#rdpURL").attr("href", "rdp://" + session.rdpURL);
-                        $("#play").removeClass("active");
-                        $("#pause").removeClass("active");
-                        $("#pause").addClass("disabled");
-                        $("#stop").addClass("active");
-                        $("#simulationContainer").hide();
-                        $("#jobLoading").hide();
-                        $("#apiLoading").hide();
-                        $("#timerContainer").hide();
-                    });
-
-                    // CLOSE
-                    session.addEventListener('close', function() {
-                        console.log("Session is closed");
-                        //Remove session
-                        localStorage.removeItem("cernvmSession");
-                        $(".recoverSession").hide();
-                        $(".newSession").show();
-                        $("#vm-controls").hide();
-                        $("#vm-config").show();
-                        $("#simulationContainer").hide();
-                        $("#jobLoading").hide();
-                        $("#apiLoading").hide();
-                    });
+                        // Session paused
+                        if (state == 4) {
+                            $("#pause").addClass("active");
+                            $("#play").removeClass("active");
+                            $("#stop").addClass("disabled");
+                            $("#apiURL").hide();
+                            $("#timerContainer").hide();
+                            // Stop also the poll
+                            clearInterval(intervalId);
+                            clearInterval(timerId);
+                            // Reset it
+                            intervalId = -1;
+                            timerId = -1;
+                            return;
+                        }
+                        // Session started
+                        if (state == 5) {
+                            $("#apiLoading").show();
+                            $("#play").addClass("active");
+                            $("#pause").removeClass("active");
+                            $("#stop").removeClass("active");
+                            $("#stop").removeClass("disabled");
+                            $("#pause").removeClass("disabled");
+                            return;
+                        }
+                        // Session stopped or hibernated
+                        if (state == 2 || state == 3) {
+                            $("#play").removeClass("active");
+                            $("#pause").removeClass("active");
+                            $("#pause").addClass("disabled");
+                            $("#stop").addClass("active");
+                            $("#simulationContainer").hide();
+                            $("#jobLoading").hide();
+                            $("#apiLoading").hide();
+                            $("#timerContainer").hide();
+                            return;
+                        }
+                    }
 
                     session.addEventListener('error', function(mesg, err){
                         console.log(msg + " error code: " + err);
@@ -336,14 +266,9 @@
                         }
                         else {
                             $("#timerContainer").show();
-                            //var logs = $("<a/>");
-                            //logs.addClass("btn btn-default");
-                            //logs.html('<i class="fa fa-cogs"></i> Log files');
                             $("#logs").off('click').on('click', function(){
                                 var windowObjectReference = window.open(session.apiURL + "/logs" , "cernvmLogs");
                             });
-                            //$("#logs").attr("href", session.apiURL + "/logs");
-                            //$("#logs").attr("target", "_blank");
                             $("#logs").removeClass("disabled");
                             $("#info").show();
 
@@ -369,30 +294,14 @@
                     $("#play").off('click').on('click', function(){
                         $("#play").addClass("active");
                         console.log("Session state: " + session.state);
-                        // If session paused resume it
-                        if (session.state == 6) {
-                            res = session.resume();
-                            return;
-                        }
-
-                        // If session starting or started pause it
-                        //if ((session.state == 3) || (session.state == 4)) {
-                        //    res = session.pause();
-                        //    return;
-                        //}
-
-                        // Else start
-                        if ((session.state == 0) || (session.state == 2)) {
-                            res = session.start();
-                            return;
-                        }
+                        session.start();
                     });
 
                     $("#pause").off('click').on('click', function(){
                         session.pause();
                     });
                     $("#stop").off('click').on('click', function(){
-                        if (session.state == 4) {
+                        if (session.state == 5) {
                             $("#stop").html('<i class="fa fa-refresh fa-spin"></i> Stopping ');
                             $("#stop").addClass("disabled");
                             $("#pause").addClass("disabled");
