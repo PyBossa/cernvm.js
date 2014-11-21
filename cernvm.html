@@ -195,7 +195,6 @@
 
                     $("#vm-controls").show();
 
-
                     // Bind Events
                     session.addEventListener('progress', function(msg, progress){
                         if (progress < 1.0) {
@@ -223,7 +222,7 @@
                             $("#play").removeClass("active");
                             $("#apiURL").hide();
                             $("#timerContainer").hide();
-                            $("#logs").removeClass("disabled");
+                            $("#logs").addClass("disabled");
                             // Stop also the poll
                             clearInterval(intervalId);
                             clearInterval(timerId);
@@ -256,7 +255,7 @@
                             $("#jobLoading").hide();
                             $("#apiLoading").hide();
                             $("#timerContainer").hide();
-                            $("#logs").removeClass("disabled");
+                            $("#logs").addClass("disabled");
                             // Stop also the poll
                             clearInterval(intervalId);
                             clearInterval(timerId);
@@ -278,7 +277,7 @@
                             $("#jobLoading").hide();
                             $("#apiLoading").hide();
                             $("#timerContainer").hide();
-                            $("#logs").removeClass("disabled");
+                            $("#logs").addClass("disabled");
                             // Stop also the poll
                             clearInterval(intervalId);
                             clearInterval(timerId);
