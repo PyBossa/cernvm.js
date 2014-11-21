@@ -324,12 +324,13 @@
                 function showFigures(url){
                     $("#apiLoading").hide();
 
-                    var xhr = $.getJSON({
+                    var xhr = $.ajax({
                         url: url + '/job/resources.json',
-                        cache: false
-                    });
-                    xhr.done(function(data, textStatus, request){
-                        console.log();
+                        cache: false,
+                        crossDomain: true,
+                        dataType: 'json'
+                    })
+                    .done(function(data, textStatus, request){
                         var histograms = data.sprites.histograms;
                             $("#jobLoading").hide();
                             $("#sim").html('');
@@ -369,9 +370,8 @@
                             $("#galleria").html("").append(figureLoading);
                             $("#galleria").show();
                         }
-                    });
-
-                    xhr.fail(function(){
+                    })
+                    .fail(function(){
                         console.log("Figures not available yet");
                         $("#apiLoading").hide();
                         $("#jobLoading").show();
