@@ -79,7 +79,7 @@
                     <div class="btn-group" style="margin-left:0px;">
                         <button id="play" class="btn btn-default"><i class="fa fa-play"></i> Play</button>
                         <button id="pause" class="btn btn-default"><i class="fa fa-pause"></i> Pause</button>
-                        <button id="hibernate" class="btn btn-default"><i class="fa fa-stop"></i> Hibernate</button>
+                        <button id="hibernate" class="btn btn-default"><i class="fa fa-save"></i> Hibernate</button>
                         <button id="stop" class="btn btn-default"><i class="fa fa-stop"></i> Stop</button>
                         <button id="remove" class="btn btn-default"><i class="fa fa-trash"></i> Remove</button>
                     </div>
@@ -221,9 +221,9 @@
                         if (state == 4) {
                             $("#pause").addClass("active");
                             $("#play").removeClass("active");
-                            $("#stop").addClass("disabled");
                             $("#apiURL").hide();
                             $("#timerContainer").hide();
+                            $("#logs").removeClass("disabled");
                             // Stop also the poll
                             clearInterval(intervalId);
                             clearInterval(timerId);
@@ -239,19 +239,52 @@
                             $("#pause").removeClass("active");
                             $("#stop").removeClass("active");
                             $("#stop").removeClass("disabled");
+                            $("#hibernate").removeClass("active");
+                            $("#hibernate").removeClass("disabled");
                             $("#pause").removeClass("disabled");
                             return;
                         }
-                        // Session stopped or hibernated
-                        if (state == 2 || state == 3) {
+                        // Session hibernated
+                        if (state == 3) {
                             $("#play").removeClass("active");
                             $("#pause").removeClass("active");
                             $("#pause").addClass("disabled");
-                            $("#stop").addClass("active");
+                            $("#stop").addClass("disabled");
+                            $("#hibernate").addClass("active");
+                            $("#hibernate").html('<i class="fa fa-save"></i> Hibernate ');
                             $("#simulationContainer").hide();
                             $("#jobLoading").hide();
                             $("#apiLoading").hide();
                             $("#timerContainer").hide();
+                            $("#logs").removeClass("disabled");
+                            // Stop also the poll
+                            clearInterval(intervalId);
+                            clearInterval(timerId);
+                            // Reset it
+                            intervalId = -1;
+                            timerId = -1;
+                            return;
+                        }
+                        // Session stopped
+                        if (state == 2) {
+                            $("#play").removeClass("active");
+                            $("#pause").removeClass("active");
+                            $("#pause").addClass("disabled");
+                            $("#stop").addClass("active");
+                            $("#stop").html('<i class="fa fa-stop"></i> Stop ');
+                            $("#hibernate").removeClass("active");
+                            $("#hibernate").addClass("disabled");
+                            $("#simulationContainer").hide();
+                            $("#jobLoading").hide();
+                            $("#apiLoading").hide();
+                            $("#timerContainer").hide();
+                            $("#logs").removeClass("disabled");
+                            // Stop also the poll
+                            clearInterval(intervalId);
+                            clearInterval(timerId);
+                            // Reset it
+                            intervalId = -1;
+                            timerId = -1;
                             return;
                         }
                     }
@@ -302,12 +335,20 @@
                         session.pause();
                         }
                     });
+                    $("#hibernate").off('click').on('click', function(){
+                        if (session.state == 4 || session.state == 5) {
+                            $("#hibernate").html('<i class="fa fa-refresh fa-spin"></i> Hibernating ');
+                            $("#hibernate").addClass("disabled");
+                            $("#pause").addClass("disabled");
+                            session.hibernate();
+                        }
+                    });
                     $("#stop").off('click').on('click', function(){
                         if (session.state == 4 || session.state == 5) {
                             $("#stop").html('<i class="fa fa-refresh fa-spin"></i> Stopping ');
                             $("#stop").addClass("disabled");
                             $("#pause").addClass("disabled");
-                            session.hibernate();
+                            session.stop();
                         }
                     });
                     $("#remove").off('click').on('click', function(){
