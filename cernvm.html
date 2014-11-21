@@ -298,7 +298,9 @@
                     });
 
                     $("#pause").off('click').on('click', function(){
+                        if (session.state == 5) {
                         session.pause();
+                        }
                     });
                     $("#stop").off('click').on('click', function(){
                         if (session.state == 5) {
