@@ -71,10 +71,19 @@
             <div class="row">
                 <div class="col-md-9">
                     <p><strong>Click in the Play button to start contributing</strong></p>
-                    <p><span class="label label-info"><i class="fa fa-bullhorn"></i> Note</span> You can start, pause, hibernate, stop or even remove the virtual machine from your computer.</p> 
-                    <div id="advance-btn" class="btn-group" style="padding-top:5px; padding-bottom:5px;display:none;">
-                        <a href="#" id="rdpURL" class="btn btn-inverse"><i class="fa fa-eye"></i> Open Virtual Machine RDP window</a>
-                        <a href="#" id="logs" class="btn btn-inverse disabled"><i class="fa fa-cogs"></i> Open Virtual Machine Logs</a>
+                    <p><span class="label label-info"><i class="fa fa-bullhorn"></i> Note</span> You can start, pause, hibernate, stop or even remove the virtual machine from your computer.</p>
+                    <div class="row">
+                        <div class="col-md-9">
+                            <button id="show-advanced" type="button" class="btn btn-default" data-toggle="button"><i class="fa fa-square-o"></i> Show advanced options</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div  class="col-md-9">
+                            <div id="advanced-options" class="btn-group" style="padding-top:5px; padding-bottom:5px;display:none;">
+                            <a href="#" id="rdpURL" class="btn btn-inverse"><i class="fa fa-eye"></i> Open Virtual Machine RDP window</a>
+                            <a href="#" id="logs" class="btn btn-inverse disabled"><i class="fa fa-cogs"></i> Open Virtual Machine Logs</a>
+                        </div>
+                        </div>
                     </div>
                     <div class="btn-group" style="margin-left:0px;">
                         <button id="play" class="btn btn-default"><i class="fa fa-play"></i> Play</button>
@@ -83,8 +92,6 @@
                         <button id="stop" class="btn btn-default"><i class="fa fa-stop"></i> Stop</button>
                         <button id="remove" class="btn btn-default"><i class="fa fa-trash"></i> Remove</button>
                     </div>
-
-                    <button id="advance" type="button" class="btn btn-default" data-toggle="button"><i class="fa fa-square-o"></i> Show advance options</button>
                 </div>
                 <div id="timerContainer" class="col-md-3 img-polaroid" style="text-align:center; display:none">
                     <label for="timer" style="font-size:12px;">Remaining time to update the figures</label>
@@ -101,7 +108,7 @@
 <div class="row">
     <div class="col-md-12">
         <div id="apiLoading" class="alert alert-info" style="display:none;">
-            <i class="fa fa-refresh fa-spin"></i> <strong>Info:</strong> Enabling Advance Options to control the Virtual Machine...
+            <i class="fa fa-refresh fa-spin"></i> <strong>Info:</strong> Enabling Advanced Options to control the Virtual Machine...
             <!-- Dial to show the count down to next update -->
         </div>
         <div id="jobLoading" class="alert alert-warning" style="display:none;">
@@ -177,13 +184,13 @@
                     session.openRDPWindow();
                 });
 
-                $("#advance").off('click').on('click', function(){
-                    $("#advance-btn").toggle();
-                    if ($("#advance").hasClass('active')) {
-                        $("#advance").html('<i class="fa fa-square-o"></i> Show advance options');
+                $("#show-advanced").off('click').on('click', function(){
+                    $("#advanced-options").toggle();
+                    if ($("#show-advanced").hasClass('active')) {
+                        $("#show-advanced").html('<i class="fa fa-square-o"></i> Show advanced options');
                     }
                     else {
-                        $("#advance").html('<i class="fa fa-check-square-o"></i> Hide advance options');
+                        $("#show-advanced").html('<i class="fa fa-check-square-o"></i> Hide advanced options');
                     }
                 });
 
