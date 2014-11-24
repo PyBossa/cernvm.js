@@ -331,6 +331,7 @@
                     });
                     $("#destroy").off('click').on('click', function(){
                         session.close();
+                        localStorage.removeItem("cernvmSession");
                     });
                 }
 
