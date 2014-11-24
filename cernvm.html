@@ -110,7 +110,7 @@
             <i class="fa fa-refresh fa-spin"></i> <strong>Info:</strong> Enabling Advanced Options to control the Virtual Machine...
             <!-- Dial to show the count down to next update -->
         </div>
-        <div id="jobLoading" class="alert alert-warning" style="display:none;">
+        <div id="jobLoading" class="alert alert-info" style="display:none;">
             <i class="fa fa-refresh fa-spin"></i> <strong>Info:</strong> Your Virtual Machine is being prepared to run jobs...
             <!-- Dial to show the count down to next update -->
         </div>
@@ -247,7 +247,6 @@
                         }
                         // Session started
                         if (state == 5) {
-                            $("#apiLoading").show();
                             $("#play").addClass("active");
                             $("#pause").removeClass("active");
                             $("#stop").removeClass("active");
@@ -265,8 +264,6 @@
                             $("#stop").html('<i class="fa fa-stop"></i> Stop ');
                             $("#destroy").removeClass("disabled");
                             $("#simulationContainer").hide();
-                            $("#jobLoading").hide();
-                            $("#apiLoading").hide();
                             $("#timerContainer").hide();
                             $("#logs").addClass("disabled");
                             // Stop also the poll
@@ -288,6 +285,7 @@
                             $("#simulationContainer").hide();
                         }
                         else {
+                            $("#apiLoading").hide();
                             $("#timerContainer").show();
                             $("#logs").off('click').on('click', function(){
                                 var windowObjectReference = window.open(session.apiURL + "/logs" , "cernvmLogs");
@@ -314,6 +312,9 @@
                     $("#timer").val(timerValue).trigger('change');
                     $("#vm-config").hide();
                     $("#play").off('click').on('click', function(){
+                        if (session.state != 5) {
+                            $("#apiLoading").show();
+                        }
                         $("#play").addClass("active");
                         console.log("Session state: " + session.state);
                         session.start();
@@ -321,17 +322,23 @@
                     $("#pause").off('click').on('click', function(){
                         if (session.state == 5) {
                         session.pause();
+                        $("#jobLoading").hide();
+                        $("#apiLoading").hide();
                         }
                     });
                     $("#stop").off('click').on('click', function(){
                         if (session.state == 4 || session.state == 5) {
                             $("#stop").html('<i class="fa fa-refresh fa-spin"></i> Stopping ');
                             session.stop();
+                            $("#jobLoading").hide();
+                            $("#apiLoading").hide();
                         }
                     });
                     $("#destroy").off('click').on('click', function(){
                         session.close();
                         localStorage.removeItem("cernvmSession");
+                        $("#jobLoading").hide();
+                        $("#apiLoading").hide();
                     });
                 }
 
@@ -344,7 +351,6 @@
                 }
 
                 function showFigures(url){
-                    $("#apiLoading").hide();
 
                     var xhr = $.ajax({
                         url: url + '/job/resources.json',
@@ -395,7 +401,6 @@
                     })
                     .fail(function(){
                         console.log("Figures not available yet");
-                        $("#apiLoading").hide();
                         $("#jobLoading").show();
                     });
                 }
