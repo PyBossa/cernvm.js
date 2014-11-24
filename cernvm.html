@@ -65,13 +65,13 @@
             </div>
         </div>
         <!-- End section progress -->
-        <!-- Section for controlling the VM: play, pause, stop. hibernate and remove -->
+        <!-- Section for controlling the VM: play, pause, stop and remove -->
         <div id="vm-controls" style="display:none; padding-bottom: 5px; padding-top:5px;">
             <h1><i class="fa fa-dashboard"></i> Step 2 of 2: <small>Control the Virtual Machine</small></h1>
             <div class="row">
                 <div class="col-md-9">
                     <p><strong>Click in the Play button to start contributing</strong></p>
-                    <p><span class="label label-info"><i class="fa fa-bullhorn"></i> Note</span> You can start, pause, hibernate, stop or even remove the virtual machine from your computer.</p>
+                    <p><span class="label label-info"><i class="fa fa-bullhorn"></i> Note</span> You can start, pause, stop or even remove the virtual machine from your computer.</p>
                     <div class="row">
                         <div class="col-md-9">
                             <button id="show-advanced" type="button" class="btn btn-default" data-toggle="button"><i class="fa fa-square-o"></i> Show advanced options</button>
@@ -88,7 +88,6 @@
                     <div class="btn-group" style="margin-left:0px;">
                         <button id="play" class="btn btn-default"><i class="fa fa-play"></i> Play</button>
                         <button id="pause" class="btn btn-default"><i class="fa fa-pause"></i> Pause</button>
-                        <button id="hibernate" class="btn btn-default"><i class="fa fa-save"></i> Hibernate</button>
                         <button id="stop" class="btn btn-default"><i class="fa fa-stop"></i> Stop</button>
                         <button id="destroy" class="btn btn-default"><i class="fa fa-trash-o"></i> Destroy</button>
                     </div>
@@ -223,11 +222,9 @@
                             $("#vm-config").hide();
                             $("play").removeClass("active");
                             $("#pause").removeClass("active");
-                            $("#hibernate").removeClass("active");
                             $("#stop").removeClass("active");
                             $("#destroy").removeClass("active");
                             $("#pause").addClass("disabled");
-                            $("#hibernate").addClass("disabled");
                             $("#stop").addClass("disabled");
                             $("#destroy").addClass("disabled");
                             return;
@@ -254,41 +251,16 @@
                             $("#pause").removeClass("active");
                             $("#stop").removeClass("active");
                             $("#stop").removeClass("disabled");
-                            $("#hibernate").removeClass("active");
-                            $("#hibernate").removeClass("disabled");
                             $("#pause").removeClass("disabled");
                             return;
                         }
-                        // Session hibernated
-                        if (state == 3) {
-                            $("#play").removeClass("active");
-                            $("#pause").removeClass("active");
-                            $("#pause").addClass("disabled");
-                            $("#stop").addClass("disabled");
-                            $("#hibernate").addClass("active");
-                            $("#hibernate").html('<i class="fa fa-save"></i> Hibernate ');
-                            $("#simulationContainer").hide();
-                            $("#jobLoading").hide();
-                            $("#apiLoading").hide();
-                            $("#timerContainer").hide();
-                            $("#logs").addClass("disabled");
-                            // Stop also the poll
-                            clearInterval(intervalId);
-                            clearInterval(timerId);
-                            // Reset it
-                            intervalId = -1;
-                            timerId = -1;
-                            return;
-                        }
-                        // Session stopped
-                        if (state == 2) {
+                        // Session hibernated or stopped
+                        if (state == 3 || state == 2) {
                             $("#play").removeClass("active");
                             $("#pause").removeClass("active");
                             $("#pause").addClass("disabled");
                             $("#stop").addClass("active");
                             $("#stop").html('<i class="fa fa-stop"></i> Stop ');
-                            $("#hibernate").removeClass("active");
-                            $("#hibernate").addClass("disabled");
                             $("#simulationContainer").hide();
                             $("#jobLoading").hide();
                             $("#apiLoading").hide();
@@ -302,7 +274,6 @@
                             timerId = -1;
                             return;
                         }
-                    }
 
                     session.addEventListener('error', function(mesg, err){
                         console.log(msg + " error code: " + err);
@@ -338,22 +309,14 @@
 
                     $("#timer").val(timerValue).trigger('change');
                     $("#vm-config").hide();
-
                     $("#play").off('click').on('click', function(){
                         $("#play").addClass("active");
                         console.log("Session state: " + session.state);
                         session.start();
                     });
-
                     $("#pause").off('click').on('click', function(){
                         if (session.state == 5) {
                         session.pause();
-                        }
-                    });
-                    $("#hibernate").off('click').on('click', function(){
-                        if (session.state == 4 || session.state == 5) {
-                            $("#hibernate").html('<i class="fa fa-refresh fa-spin"></i> Hibernating ');
-                            session.hibernate();
                         }
                     });
                     $("#stop").off('click').on('click', function(){
