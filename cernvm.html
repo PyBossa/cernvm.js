@@ -233,6 +233,7 @@
                         if (state == 4) {
                             $("#pause").addClass("active");
                             $("#play").removeClass("active");
+                            $("#destroy").removeClass("disabled");
                             $("#apiURL").hide();
                             $("#timerContainer").hide();
                             $("#logs").addClass("disabled");
@@ -252,6 +253,7 @@
                             $("#stop").removeClass("active");
                             $("#stop").removeClass("disabled");
                             $("#pause").removeClass("disabled");
+                            $("#destroy").removeClass("disabled");
                             return;
                         }
                         // Session hibernated or stopped
@@ -261,6 +263,7 @@
                             $("#pause").addClass("disabled");
                             $("#stop").addClass("active");
                             $("#stop").html('<i class="fa fa-stop"></i> Stop ');
+                            $("#destroy").removeClass("disabled");
                             $("#simulationContainer").hide();
                             $("#jobLoading").hide();
                             $("#apiLoading").hide();
