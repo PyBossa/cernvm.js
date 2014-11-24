@@ -90,7 +90,7 @@
                         <button id="pause" class="btn btn-default"><i class="fa fa-pause"></i> Pause</button>
                         <button id="hibernate" class="btn btn-default"><i class="fa fa-save"></i> Hibernate</button>
                         <button id="stop" class="btn btn-default"><i class="fa fa-stop"></i> Stop</button>
-                        <button id="remove" class="btn btn-default"><i class="fa fa-trash"></i> Remove</button>
+                        <button id="destroy" class="btn btn-default"><i class="fa fa-trash-o"></i> Destroy</button>
                     </div>
                 </div>
                 <div id="timerContainer" class="col-md-3 img-polaroid" style="text-align:center; display:none">
@@ -221,6 +221,15 @@
                         // No session
                         if (state == 0) {
                             $("#vm-config").hide();
+                            $("play").removeClass("active");
+                            $("#pause").removeClass("active");
+                            $("#hibernate").removeClass("active");
+                            $("#stop").removeClass("active");
+                            $("#destroy").removeClass("active");
+                            $("#pause").addClass("disabled");
+                            $("#hibernate").addClass("disabled");
+                            $("#stop").addClass("disabled");
+                            $("#destroy").addClass("disabled");
                             return;
                         }
                         // Session paused
@@ -357,7 +366,7 @@
                             session.stop();
                         }
                     });
-                    $("#remove").off('click').on('click', function(){
+                    $("#destroy").off('click').on('click', function(){
                         session.close();
                     });
                 }
