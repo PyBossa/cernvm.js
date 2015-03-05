@@ -132,7 +132,7 @@
         $(".create-vm").removeClass("disabled");
         // First check if the user already created a session before
         if (Modernizr.localstorage) {
-            if (localStorage.getItem("cernvmSession") != null) {
+            if (localStorage.getItem("cernvmSession") !== null) {
                 console.log("There is a previous session");
                 $(".recoverSession").show();
                 $(".newSession").hide();
@@ -218,7 +218,7 @@
 
                     function handleNewState(state) {
                         // No session
-                        if (state == 0) {
+                        if (state === 0) {
                             $("#vm-config").hide();
                             $("play").removeClass("active");
                             $("#pause").removeClass("active");
@@ -231,7 +231,7 @@
                             return;
                         }
                         // Session paused
-                        if (state == 4) {
+                        if (state === 4) {
                             $("#pause").addClass("active");
                             $("#play").removeClass("active");
                             $("#destroy").removeClass("disabled");
@@ -247,7 +247,7 @@
                             return;
                         }
                         // Session started
-                        if (state == 5) {
+                        if (state === 5) {
                             $("#play").addClass("active");
                             $("#pause").removeClass("active");
                             $("#stop").removeClass("active");
@@ -257,7 +257,7 @@
                             return;
                         }
                         // Session hibernated or stopped
-                        if (state == 3 || state == 2) {
+                        if (state === 3 || state === 2) {
                             $("#play").removeClass("active");
                             $("#pause").removeClass("active");
                             $("#pause").addClass("disabled");
@@ -294,7 +294,7 @@
                             $("#logs").removeClass("disabled");
                             $("#info").show();
 
-                            if (intervalId == -1) {
+                            if (intervalId === -1) {
                                 showFigures(session.apiURL);
                                 intervalId = setInterval(function(){showFigures(session.apiURL)}, pollingTime);
                                 $("#timer").val(timerValue).trigger('change');
@@ -313,7 +313,7 @@
                     $("#timer").val(timerValue).trigger('change');
                     $("#vm-config").hide();
                     $("#play").off('click').on('click', function(){
-                        if (session.state != 5) {
+                        if (session.state !== 5) {
                             $("#apiLoading").show();
                         }
                         $("#play").addClass("active");
@@ -321,14 +321,14 @@
                         session.start();
                     });
                     $("#pause").off('click').on('click', function(){
-                        if (session.state == 5) {
+                        if (session.state === 5) {
                         session.pause();
                         $("#jobLoading").hide();
                         $("#apiLoading").hide();
                         }
                     });
                     $("#stop").off('click').on('click', function(){
-                        if (session.state == 4 || session.state == 5) {
+                        if (session.state === 4 || session.state === 5) {
                             $("#stop").html('<i class="fa fa-refresh fa-spin"></i> Stopping ');
                             session.hibernate();
                             $("#jobLoading").hide();
@@ -344,7 +344,7 @@
                 }
 
                 function session_failure(error_code) {
-                    if (error_code == -20) {
+                    if (error_code === -20) {
                         $("#sessionContainer").addClass("error");
                         $("#wrongPassword").show();
                     }
@@ -374,7 +374,7 @@
                             $("#info").show();
                             $("#simulationContainer").show();
 
-                        if (histograms.length != 0) {
+                        if (histograms.length !== 0) {
                             // Now the figures
                             $("#galleria").html('');
                             for(var i=0; i< histograms.length; i++){
