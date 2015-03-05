@@ -330,7 +330,7 @@
                     $("#stop").off('click').on('click', function(){
                         if (session.state == 4 || session.state == 5) {
                             $("#stop").html('<i class="fa fa-refresh fa-spin"></i> Stopping ');
-                            session.stop();
+                            session.hibernate();
                             $("#jobLoading").hide();
                             $("#apiLoading").hide();
                         }
